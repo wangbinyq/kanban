@@ -8,8 +8,22 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'home',
-      component: Home
+      component: Home,
+      children: [
+        {
+          path: '',
+          name: 'home',
+          component: () => import('./views/ProjectList'),
+          meta: {
+            title: 'Projects'
+          }
+        },
+        {
+          path: '/project/:projectId',
+          name: 'project',
+          component: () => import('./views/Project')
+        }
+      ]
     }
   ]
 })
