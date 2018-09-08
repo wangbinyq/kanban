@@ -33,4 +33,33 @@ html, body {
 .app {
   height: 100%;
 }
+
+::-webkit-scrollbar {
+    width: 14px;
+    height: 14px
+}
+
+::-webkit-scrollbar-track {
+    background-color: rgba(33,37,41,.05)
+}
+
+::-webkit-scrollbar-thumb,::-webkit-scrollbar-track {
+    border: 4px solid transparent;
+    background-clip: padding-box;
+    border-radius: 8px
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #adb5bd
+}
+
+::-webkit-scrollbar-button {
+    display: none;
+    width: 0;
+    height: 0
+}
+
+::-webkit-scrollbar-corner {
+    background-color: transparent
+}
 </style>

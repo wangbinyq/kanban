@@ -32,7 +32,7 @@
         </template>
       </span>
     </el-header>
-    <el-main class="app-main">
+    <el-main class="app-main" style="padding: 10px;">
       <router-view></router-view>
     </el-main>
   </el-container>
@@ -76,6 +76,7 @@ export default {
 
 .app-main {
   overflow: auto;
+  height: 100%;
 }
 
 .el-icon-menu {

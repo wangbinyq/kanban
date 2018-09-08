@@ -12,6 +12,8 @@
       </project-item>
     </router-link>
     <add-project-item
+      name="Project"
+      class="add-project-item"
       @create="onCreateProject"
       >
     </add-project-item>
@@ -20,7 +22,7 @@
 
 <script>
 import ProjectItem from '@/components/ProjectItem'
-import AddProjectItem from '@/components/AddProjectItem'
+import AddProjectItem from '@/components/AddItem'
 
 import { mapGetters } from 'vuex'
 export default {
@@ -47,5 +49,26 @@ export default {
 .project-list {
   display: flex;
   flex-wrap: wrap;
+}
+
+.add-project-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #ddd;
+  color: #444;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 10px;
+  margin: 5px;
+  width: 240px;
+  height: 120px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.1s;
+
+  &:hover {
+    background: #ccc;
+  }
 }
 </style>

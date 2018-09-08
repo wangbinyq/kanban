@@ -5,7 +5,7 @@ Vue.directive('clickoutside', clickoutside)
 
 Vue.directive('autofocus', {
   bind (el) {
-    const input = el.querySelector('input')
+    const input = el.querySelector('input, textarea')
     setTimeout(() => input && input.focus(), 0)
   }
 })
