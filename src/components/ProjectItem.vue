@@ -10,6 +10,23 @@
         :style="{height: `${taskListHeight(taskList)}%`}"
         class="column-preview-tasks"></div>
     </div>
+    <el-popover
+      v-model="bShowDelete"
+      popper-class="delete-popover"
+      content="delete?"
+      placement="bottom">
+      <i @click.stop="bShowDelete = true" slot="reference" class="el-icon-close"></i>
+      <div style="margin-bottom: 5px;">
+        Are you sure?
+      </div>
+      <el-button
+        style="width: 100%;"
+        @click="$emit('delete')"
+        size="small"
+        type="danger">
+        Delete
+      </el-button>
+    </el-popover>
   </div>
 </template>
 
@@ -17,6 +34,11 @@
 export default {
   props: {
     project: Object
+  },
+  data () {
+    return {
+      bShowDelete: false
+    }
   },
   computed: {
     taskLists () {
@@ -35,6 +57,7 @@ export default {
 <style lang="scss" scoped>
 .project-item {
   display: flex;
+  position: relative;
   flex-direction: column;
   padding: 10px;
   margin: 5px;
@@ -51,6 +74,17 @@ export default {
 
   &:hover {
     background: #75b6f7;
+
+    .el-icon-close {
+      display: block;
+    }
+  }
+
+  .el-icon-close {
+    display: none;
+    position: absolute;
+    top: 10px;
+    right: 10px;
   }
 }
 

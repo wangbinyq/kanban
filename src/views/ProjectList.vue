@@ -7,6 +7,7 @@
       :key="project.id"
       :to="{name: 'project', params: {projectId: project.id}}">
       <project-item
+        @delete="onDeleteProject(project)"
         :project="project">
       </project-item>
     </router-link>
@@ -32,7 +33,11 @@ export default {
   },
   methods: {
     onCreateProject (name) {
+      if (!name) return
       return this.$store.dispatch('createProject', { name })
+    },
+    onDeleteProject (project) {
+      return this.$store.dispatch('deleteProject', project.id)
     }
   }
 }

@@ -24,9 +24,7 @@
       </el-dropdown>
       <span class="current-project">
         <edit-input v-if="currentProject"
-          show-delete
           @change="updateProjectName"
-          @delete="deleteProject"
           :value="currentProject.name">
         </edit-input>
         <template>
@@ -64,14 +62,6 @@ export default {
         id: this.currentProject.id,
         name
       })
-    },
-    deleteProject () {
-      if (!this.currentProject) {
-        return
-      }
-      this.$router.push('/')
-      return this.$store.dispatch('deleteProject',
-        this.currentProject.id)
     }
   }
 }
