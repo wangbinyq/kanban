@@ -56,11 +56,6 @@ export default {
   border-radius: 5px;
   padding: 6px 8px;
   background: white;
-  margin: 8px 5px 0;
-
-  &:first-child {
-    margin-top: 0;
-  }
 
   &.markdown-body {
     cursor: pointer;

@@ -16,7 +16,7 @@ function resource (name, addition) {
       v && commit(`update${Name}`, v)
     },
 
-    async [`create${Name}`] ({ dispatch }, value) {
+    async [`create${Name}`] ({ dispatch, commit }, value) {
       const id = await db[`${name}s`].put(value)
       await dispatch(`get${cap(name)}`, id)
     },

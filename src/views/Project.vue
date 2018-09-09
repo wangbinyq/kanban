@@ -73,7 +73,7 @@ export default {
 
       return this.$store.dispatch('updateTaskList', {
         id: movedTaskList.id,
-        sort: newSortVal || 1000
+        sort: newSortVal
       })
     }
   }
