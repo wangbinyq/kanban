@@ -12,13 +12,14 @@
     class="item-add item-add-edit">
     <div class="add-input">
       <el-input
+        ref="input"
         v-autofocus
         autosize
+        @keypress.native.enter="onAdd"
         :type="inputType"
-        @keypress.native.enter="($emit('create', newName), newName = '')"
         v-model="newName"></el-input>
     </div>
-    <el-button @click="($emit('create', newName), newName = '')" size="small" type="primary">
+    <el-button @click="onAdd" size="small" type="primary">
       Create
     </el-button>
   </div>
@@ -38,6 +39,16 @@ export default {
       add: false,
       newName: ''
     }
+  },
+  methods: {
+    onAdd () {
+      if (!this.newName) {
+        return
+      }
+      this.$emit('create', this.newName)
+      this.newName = ''
+      this.$refs.input.focus()
+    }
   }
 }
 </script>
@@ -52,8 +63,9 @@ export default {
     display: block;
   }
 
+  color: #666;
   &:hover {
-    color: #333;
+    color: #333 !important;
   }
 
   .el-icon-plus {

@@ -30,6 +30,7 @@ export default {
 
 <style lang="scss" scoped>
 .el-icon-close {
+  cursor: pointer;
   position: absolute;
   top: 10px;
   right: 10px;

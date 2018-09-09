@@ -1,12 +1,13 @@
 <template>
-  <div class="task-list">
+  <div v-if="taskList" class="task-list">
     <div class="list-header">
       <edit-input
         :value="taskList.name"
         @change="name => onUpdateTaskList({ name })">
       </edit-input>
+      <delete-icon @delete="onDeleteTaskList"></delete-icon>
     </div>
-    <div class="tasks-wrapper">
+    <div ref="elTaskList" class="tasks-wrapper">
       <task-item
         v-for="task in tasks"
         :key="task.id"
@@ -21,18 +22,27 @@
       class="add-task">
     </add-task-item>
   </div>
+  <div v-else class="task-list add-task-list">
+    <add-task-item
+      name="TaskList"
+      @create="name => $emit('create-task-list', name)"
+      class="add-task">
+    </add-task-item>
+  </div>
 </template>
 
 <script>
 import EditInput from './EditInput'
 import TaskItem from './TaskItem'
 import AddTaskItem from './AddItem'
+import DeleteIcon from './DeleteIcon'
 
 export default {
   components: {
     EditInput,
     TaskItem,
-    AddTaskItem
+    AddTaskItem,
+    DeleteIcon
   },
   props: {
     taskList: Object
@@ -53,6 +63,12 @@ export default {
     onCreateTask (content) {
       const taskListId = this.taskList.id
       return this.$store.dispatch('createTask', { content, taskListId })
+        .then(() => this.$nextTick(
+          () => this.$refs.elTaskList.scrollTo(0, this.$refs.elTaskList.scrollHeight))
+        )
+    },
+    onDeleteTaskList () {
+      return this.$store.dispatch('deleteTaskList', this.taskList.id)
     }
   }
 }
@@ -67,6 +83,7 @@ export default {
 
 .task-list {
   width: 300px;
+  flex: 0 0 300px;
   min-height: 0;
   max-height: 100%;
   background: #eee;
@@ -78,6 +95,7 @@ export default {
 
 .list-header {
   min-height: 50px;
+  position: relative;
   display: flex;
   align-content: center;
   padding: 5px;
@@ -86,6 +104,16 @@ export default {
     padding: 10px;
     width: calc(100% - 30px);
     overflow-wrap: break-word;
+  }
+
+  /deep/ .el-icon-close {
+    display: none;
+  }
+
+  &:hover {
+    /deep/ .el-icon-close {
+      display: block;
+    }
   }
 }
 
@@ -97,9 +125,5 @@ export default {
 .add-task {
   cursor: pointer;
   padding: 14px 15px;
-
-  &:hover {
-    color: $--color-text-regular;
-  }
 }
 </style>

@@ -1,6 +1,7 @@
 $--font-path: '~element-ui/lib/theme-chalk/fonts';
 
 @import "~element-ui/packages/theme-chalk/src/index";
+@import "./github-markdown.css";
 
 .text-truncate {
   overflow: hidden;
