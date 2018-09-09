@@ -1,25 +1,33 @@
 <template>
-  <div class="project">
-    <task-list
-      v-for="tasklist in taskLists"
-      :key="tasklist.id"
-      :task-list="tasklist"
-      >
-    </task-list>
+  <container
+    class="project"
+    orientation="horizontal"
+    @drop="onMoveTaskList">
+    <draggable
+        v-for="tasklist in taskLists"
+        :key="tasklist.id">
+      <task-list
+        :task-list="tasklist"
+        >
+      </task-list>
+    </draggable>
     <task-list
       key="add-task"
       @create-task-list="onCreateTaskList"
       :task-list="null">
     </task-list>
-  </div>
+  </container>
 </template>
 
 <script>
 import TaskList from '@/components/TaskList'
+import { Container, Draggable } from 'vue-smooth-dnd'
 
 export default {
   components: {
-    TaskList
+    TaskList,
+    Container,
+    Draggable
   },
   computed: {
     project () {
@@ -28,6 +36,7 @@ export default {
     },
     taskLists () {
       return this.$store.getters.taskLists(this.project.id)
+        .sort((tl1, tl2) => tl1.sort - tl2.sort)
     }
   },
   methods: {
@@ -35,13 +44,37 @@ export default {
       if (!name) {
         return
       }
+      const sort = ((this.taskLists[this.taskLists.length - 1] ||
+        { sort: 0 }).sort + 100) || 100
       return this.$store.dispatch('createTaskList', {
         projectId: this.project.id,
-        name
+        name,
+        sort
       })
         .then(() => this.$nextTick(
           () => this.$el.scrollTo(this.$el.scrollWidth, 0)
         ))
+    },
+    onMoveTaskList ({ removedIndex, addedIndex }) {
+      if (removedIndex === addedIndex) return
+      const movedTaskList = this.taskLists[removedIndex]
+      const targetTaskList = this.taskLists[addedIndex]
+      const pushAfter = addedIndex > removedIndex ? 1 : -1
+      const midTaskList = this.taskLists[addedIndex + pushAfter]
+      if (!movedTaskList || !targetTaskList) return
+      const targetSortVal = targetTaskList.sort
+
+      let newSortVal
+      if (midTaskList) {
+        newSortVal = (midTaskList.sort + targetSortVal) / 2
+      } else {
+        newSortVal = targetSortVal + pushAfter * 100
+      }
+
+      return this.$store.dispatch('updateTaskList', {
+        id: movedTaskList.id,
+        sort: newSortVal || 1000
+      })
     }
   }
 }

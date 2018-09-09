@@ -26,7 +26,8 @@ function resource (name, addition) {
       commit(`delete${cap(name)}`, id)
     },
 
-    async [`update${Name}`] ({ dispatch }, value) {
+    async [`update${Name}`] ({ dispatch, commit }, value) {
+      commit(`update${Name}`, value)
       await db[`${name}s`].update(value.id, value)
       await dispatch(`get${cap(name)}`, value.id)
     },
