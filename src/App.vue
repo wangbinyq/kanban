@@ -19,6 +19,10 @@ export default {
     this.init = true
     return this.initApp()
       .finally(() => this.init = false)
+  },
+  errorCaptured (error) {
+    console.error(error)
+    this.$message.error('Something goes wrong')
   }
 }
 </script>
