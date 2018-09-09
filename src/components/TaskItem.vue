@@ -13,6 +13,7 @@
       <el-input
         type="textarea"
         v-autofocus
+        @blur="onUpdateTask"
         autosize
         v-model="content">
       </el-input>
@@ -45,6 +46,12 @@ export default {
   methods: {
     onDeleteTask () {
       this.$store.dispatch('deleteTask', this.task.id)
+    },
+    onUpdateTask () {
+      this.$store.dispatch('updateTask', {
+        ...this.task,
+        content: this.content
+      })
     }
   }
 }
