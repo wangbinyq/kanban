@@ -129,8 +129,11 @@ export default {
           }
         }
 
+        /* eslint-disable */
+        const { id, ...task } = payload
+        /* eslint-enable */
         return this.$store.dispatch('createTask', {
-          ...payload,
+          ...task,
           taskListId: this.taskList.id,
           sort
         })
