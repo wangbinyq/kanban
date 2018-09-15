@@ -2,6 +2,7 @@
   <container
     class="project"
     orientation="horizontal"
+    drag-handle-selector=".task-list-draggable"
     @drop="onMoveTaskList">
     <draggable
         v-for="tasklist in taskLists"

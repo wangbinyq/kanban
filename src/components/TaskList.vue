@@ -1,6 +1,6 @@
 <template>
   <div v-if="taskList" class="task-list">
-    <div class="list-header">
+    <div class="list-header task-list-draggable">
       <edit-input
         :value="taskList.name"
         @change="name => onUpdateTaskList({ name })">
