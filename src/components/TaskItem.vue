@@ -7,9 +7,10 @@
       v-marked="task.content">
     </div>
     <div v-clickoutside="() => edit = false"
+      @click.stop="''"
       key="edutcontent"
       v-else
-      class="task-item editable">
+      class="task-item editable task-item-prevent-drag">
       <el-input
         type="textarea"
         v-autofocus

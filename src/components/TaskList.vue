@@ -11,6 +11,7 @@
       <container
         @drop="onMoveTask"
         :get-child-payload="idx => this.tasks[idx]"
+        non-drag-area-selector=".task-item-prevent-drag"
         group-name="tasks">
         <draggable
           v-for="task in tasks"
