@@ -64,6 +64,7 @@ export default {
   border-radius: 5px;
   padding: 6px 8px;
   background: white;
+  min-height: 36px;
 
   &.markdown-body {
     cursor: pointer;
