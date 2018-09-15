@@ -1,10 +1,14 @@
 <template>
   <container
-    class="project"
+    ref="container"
+    @mousemove.native="onDragScrollMove"
+    @mouseup.native="onDragScrollEnd"
+    class="project "
     orientation="horizontal"
     drag-handle-selector=".task-list-draggable"
     @drop="onMoveTaskList">
     <draggable
+        @mousedown.native.self="onDragScrollStart"
         v-for="tasklist in taskLists"
         :key="tasklist.id">
       <task-list
@@ -76,6 +80,19 @@ export default {
         id: movedTaskList.id,
         sort: newSortVal
       })
+    },
+    onDragScrollStart (e) {
+      this.bDragScroll = true
+    },
+    onDragScrollMove (e) {
+      if (!this.bDragScroll) {
+        return
+      }
+      const container = this.$refs.container.$el
+      container.scrollLeft -= e.movementX
+    },
+    onDragScrollEnd (e) {
+      this.bDragScroll = false
     }
   }
 }
