@@ -1,8 +1,9 @@
 <template>
   <div v-if="taskList" class="task-list">
-    <div class="list-header">
+    <div class="list-header task-list-draggable">
       <edit-input
         :value="taskList.name"
+        :delete="onDeleteTaskList"
         @change="name => onUpdateTaskList({ name })">
       </edit-input>
       <delete-icon @delete="onDeleteTaskList"></delete-icon>
@@ -11,6 +12,7 @@
       <container
         @drop="onMoveTask"
         :get-child-payload="idx => this.tasks[idx]"
+        non-drag-area-selector=".task-item-prevent-drag"
         group-name="tasks">
         <draggable
           v-for="task in tasks"

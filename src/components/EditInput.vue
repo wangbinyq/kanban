@@ -9,6 +9,7 @@
     </span>
   </div>
   <el-input
+    style="z-index: 100;"
     v-else
     v-autofocus
     @blur="onEnter"

@@ -1,55 +1,45 @@
 import Vue from 'vue'
 
-const updateValue = (store, { type, key, value }) => {
-  Vue.set(store[type], key,
-    Object.assign({}, store[type][key], value))
+const updateValue = (state, { type, key, value }) => {
+  Vue.set(state[type], key,
+    Object.assign({}, state[type][key], value))
 }
 
-const deleteProject = (store, id) => {
-  Vue.delete(store.projects, id)
-  setTimeout(() => {
-    Object.values(store.taskLists)
-      .filter(tl => tl.projectId === id)
-      .forEach(tl => deleteTaskList(store, tl.id))
-  }, 0)
+const deleteProject = (state, id) => {
+  Vue.delete(state.projects, id)
 }
 
-const deleteTaskList = (store, id) => {
-  Vue.delete(store.taskLists, id)
-  setTimeout(() => {
-    Object.values(store.tasks)
-      .filter(tl => tl.taskListId === id)
-      .forEach(tl => deleteTask(store, tl.id))
-  }, 0)
+const deleteTaskList = (state, id) => {
+  Vue.delete(state.taskLists, id)
 }
 
-const deleteTask = (store, id) => {
-  Vue.delete(store.tasks, id)
+const deleteTask = (state, id) => {
+  Vue.delete(state.tasks, id)
 }
 
 export default {
-  setState (store, obj) {
-    Object.entries((key, value) => Vue.set(key, value))
+  setState (state, obj) {
+    Object.entries((key, value) => Vue.set(state, key, value))
   },
 
-  updateProject (store, value) {
-    updateValue(store, {
+  updateProject (state, value) {
+    updateValue(state, {
       type: 'projects',
       key: value.id,
       value
     })
   },
 
-  updateTaskList (store, value) {
-    updateValue(store, {
+  updateTaskList (state, value) {
+    updateValue(state, {
       type: 'taskLists',
       key: value.id,
       value
     })
   },
 
-  updateTask (store, value) {
-    updateValue(store, {
+  updateTask (state, value) {
+    updateValue(state, {
       type: 'tasks',
       key: value.id,
       value
