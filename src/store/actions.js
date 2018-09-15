@@ -46,5 +46,25 @@ export default {
 
   ...resource('project'),
   ...resource('taskList'),
-  ...resource('task')
+  ...resource('task'),
+
+  async deleteProject ({ commit, dispatch, getters }, id) {
+    commit('deleteProject', id)
+    await db.projects.delete(id)
+    await Promise.all(
+      getters.taskLists(id).map(
+        tl => dispatch('deleteTaskList', tl.id)
+      )
+    )
+  },
+
+  async deleteTaskList ({ commit, dispatch, getters }, id) {
+    commit('deleteTaskList', id)
+    await db.taskLists.delete(id)
+    await Promise.all(
+      getters.tasks(id).map(
+        t => dispatch('deleteTask', t.id)
+      )
+    )
+  }
 }
