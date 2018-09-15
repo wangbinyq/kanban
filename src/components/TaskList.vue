@@ -3,6 +3,7 @@
     <div class="list-header task-list-draggable">
       <edit-input
         :value="taskList.name"
+        :delete="onDeleteTaskList"
         @change="name => onUpdateTaskList({ name })">
       </edit-input>
       <delete-icon @delete="onDeleteTaskList"></delete-icon>

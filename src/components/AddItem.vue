@@ -15,7 +15,7 @@
         ref="input"
         v-autofocus
         autosize
-        @keypress.native.enter="onAdd"
+        @keypress.native.enter="$nextTick(onAdd)"
         :type="inputType"
         v-model="newName"></el-input>
     </div>
@@ -42,7 +42,8 @@ export default {
   },
   methods: {
     onAdd () {
-      if (!this.newName) {
+      const content = this.newName.trim()
+      if (!content) {
         return
       }
       this.$emit('create', this.newName)
