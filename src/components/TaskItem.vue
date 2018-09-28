@@ -14,7 +14,7 @@
       <el-input
         type="textarea"
         v-autofocus
-        @blur="onUpdateTask"
+        @blur="onUpdateTask(content)"
         autosize
         v-model="content">
       </el-input>
@@ -60,15 +60,22 @@ export default {
     onDeleteTask () {
       this.$store.dispatch('deleteTask', this.task.id)
     },
-    onUpdateTask () {
+    onUpdateTask (content) {
       this.$store.dispatch('updateTask', {
         ...this.task,
-        content: this.content
+        content
       })
     },
     onItemClick (e) {
       if (e.target.tagName !== 'INPUT') {
         return this.edit = true
+      }
+      const subTaskText = e.target.nextSibling.data.trim()
+      const idx = this.task.content.search(new RegExp(`[ x]]( )+${subTaskText}`, 'g'))
+      if (idx > -1) {
+        const target = this.task.content[idx] === ' ' ? 'x' : ' '
+        const newContent = this.task.content.substr(0, idx) + target + this.task.content.substring(idx + 1)
+        this.onUpdateTask(newContent)
       }
     }
   }

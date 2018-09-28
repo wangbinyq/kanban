@@ -1,5 +1,5 @@
 ;/*! showdown v 1.8.6 - 22-12-2017 */
-(function(){
+const showdown = (function(){
 /**
  * Created by Tivie on 13-07-2015.
  */
@@ -3871,7 +3871,7 @@ showdown.subParser('lists', function (text, options, globals) {
       if (taskbtn && options.tasklists) {
         bulletStyle = ' class="task-list-item" style="list-style-type: none;"';
         item = item.replace(/^[ \t]*\[(x|X| )?]/m, function () {
-          var otp = '<input type="checkbox" disabled style="margin: 0px 0.35em 0.25em -1.6em; vertical-align: middle;"';
+          var otp = '<input type="checkbox" style="margin: 0px 0.35em 0.25em -1.6em; vertical-align: middle;"';
           if (checked) {
             otp += ' checked';
           }
@@ -4496,9 +4496,12 @@ if (typeof define === 'function' && define.amd) {
   module.exports = showdown;
 
 // Regular Browser loader
-} else {
+} else if(root) {
   root.showdown = showdown;
 }
+return showdown;
 }).call(this);
+
+export default showdown
 
 //# sourceMappingURL=showdown.js.map
