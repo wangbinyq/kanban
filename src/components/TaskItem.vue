@@ -92,6 +92,10 @@ export default {
 
   &.markdown-body {
     cursor: pointer;
+
+    input[type="checkbox"] {
+      cursor: pointer !important;
+    }
   }
 
   /deep/ .el-icon-close {
