@@ -30,7 +30,7 @@
                 Sync
               </div>
               <div @click.stop="bShowSyncMenu = false">
-                <el-dropdown-item @click.native="sync"
+                <el-dropdown-item @click.native="onSync"
                   :disabled="!syncInfo.syncKey || !syncInfo.syncId">
                   Sync Now
                 </el-dropdown-item>
@@ -66,7 +66,7 @@
       </span>
       <el-button
         v-if="syncInfo.syncKey && syncInfo.syncId"
-        @click="sync"
+        @click="onSync"
         :loading="headerLoading"
         type="text"
         style="margin-left: auto"
@@ -154,6 +154,11 @@ export default {
           (err) => this.$message.error('This key is unvalid: ' + err.message)
         )
         .finally(() => this.testLoading = false)
+    },
+    async onSync () {
+      this.headerLoading = true
+      return this.sync()
+        .finally(() => this.headerLoading = false)
     },
     async onSyncExport () {
       const projects = await this.syncExport()
