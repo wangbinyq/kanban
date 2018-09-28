@@ -19,7 +19,7 @@ const deleteTask = (state, id) => {
 
 export default {
   setState (state, obj) {
-    Object.entries((key, value) => Vue.set(state, key, value))
+    Object.entries(obj).forEach(([key, value]) => Vue.set(state, key, value))
   },
 
   updateProject (state, value) {
