@@ -2,9 +2,9 @@
   <div class="task-item-wrapper">
     <div v-if="!edit"
       key="editable"
-      @click="edit = true"
+      @click="onItemClick"
       class="task-item markdown-body"
-      v-marked="task.content">
+      v-html="renderedContent">
     </div>
     <div v-clickoutside="() => edit = false"
       @click.stop="''"
@@ -25,6 +25,13 @@
 
 <script>
 import DeleteIcon from './DeleteIcon'
+import showdown from '@/showdown'
+
+const mdConverter = new showdown.Converter({
+  tasklists: true,
+  tables: true
+})
+mdConverter.setFlavor('github')
 
 export default {
   components: {
@@ -37,6 +44,11 @@ export default {
     return {
       edit: false,
       content: this.task.content
+    }
+  },
+  computed: {
+    renderedContent () {
+      return mdConverter.makeHtml(this.task.content)
     }
   },
   watch: {
@@ -53,6 +65,11 @@ export default {
         ...this.task,
         content: this.content
       })
+    },
+    onItemClick (e) {
+      if (e.target.tagName !== 'INPUT') {
+        return this.edit = true
+      }
     }
   }
 }
