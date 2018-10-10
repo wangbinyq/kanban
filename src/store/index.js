@@ -7,7 +7,11 @@ const store = new Vuex.Store({
   state: {
     projects: {},
     taskLists: {},
-    tasks: {}
+    tasks: {},
+    syncInfo: {
+      syncKey: localStorage.getItem('syncKey') || '',
+      syncId: localStorage.getItem('syncId') || ''
+    }
   },
   mutations: require('./mutations').default,
   actions: require('./actions').default,

@@ -8,7 +8,7 @@
     drag-handle-selector=".task-list-draggable"
     @drop="onMoveTaskList">
     <draggable
-        @mousedown.native.self="onDragScrollStart"
+        @mousedown.native.left.self="onDragScrollStart"
         v-for="tasklist in taskLists"
         :key="tasklist.id">
       <task-list
